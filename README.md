@@ -26,7 +26,7 @@ pipelines/                       P6-39 pipeline; consumes Customer Profile (conf
 
 ```sh
 terraform fmt -check -recursive
-for s in envs/dev/core envs/dev/contract; do terraform -chdir=$s init -backend=false && terraform -chdir=$s validate; done
+for s in envs/dev/core envs/dev/contract; do terraform -chdir=$s init -backend=false && terraform -chdir=$s validate && terraform -chdir=$s test -var-file=dev.tfvars; done
 cd pipelines && uv sync && uv run pytest && uv run dda-pipeline validate --root ..
 ```
 
