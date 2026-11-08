@@ -1,0 +1,34 @@
+# Pipeline steps (P6-39), run in order by `dda-pipeline run --stage <stage>`.
+#   ingest: Cloud Run job <business>-ingest in the core data project, as <business>-ingest-<env>.
+#   build:  Cloud Run job <business>-build in the analytics project, as <business>-analytics-<env>.
+# SQL files are string.Template files: ${core_project}, ${analytics_project}, ${landing_bucket},
+# ${business}, ${env}, ${domain} and ${consumed_<key>} (pipelines/config.yaml "consumes").
+# Every BigQuery job carries the label dda-domain=<domain> (design §1.6).
+steps:
+  - name: load-accounts
+    stage: ingest
+    sql: sql/10_load_accounts.sql
+  - name: load-transactions
+    stage: ingest
+    sql: sql/11_load_transactions.sql
+  - name: curate-accounts
+    stage: ingest
+    sql: sql/20_curate_accounts.sql
+  - name: curate-transactions
+    stage: ingest
+    sql: sql/21_curate_transactions.sql
+  # AT-23: reads the Customer Profile asset as accounts-ingest-<env>, a member of its reader
+  # access group after console approval. Optional, so the run still succeeds before approval.
+  - name: customer-accounts
+    stage: ingest
+    sql: sql/22_customer_accounts.sql
+    optional: true
+  - name: build-account-summary
+    stage: build
+    sql: sql/30_account_summary.sql
+
+# Acceptance-test fixtures, run on demand: `dda-pipeline fixtures --at <id>` (README).
+fixtures:
+  at19:
+    description: AT-19, a non-sensitive table with no lineage (assert after 48 hours).
+    sql: sql/fixtures/at19_no_lineage.sql

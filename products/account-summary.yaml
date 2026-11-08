@@ -1,0 +1,21 @@
+# Data product definition (design §3.2). Schema: schemas/product.schema.json.
+id: account-summary
+display_name: Account Summary
+description: One row per account, with its product type, status and 30-day transaction activity.
+lifecycle: published
+owners_group: dda-dp-account-summary-{env}-owners@mikegyoung.joonix.net
+steward_group: dda-accounts-{env}-stewards@mikegyoung.joonix.net
+approvers:
+  - dda-dp-account-summary-{env}-owners@mikegyoung.joonix.net
+access_groups:
+  reader:
+    display_name: Reader
+    description: Read access to every asset.
+contract:
+  refresh_cadence: {frequency: Daily, refresh_time: "07:00", threshold_minutes: 120}
+  aggregate_dq_threshold: 90.0
+assets:
+  account_summary:
+    table: accounts_analytics.account_summary
+    form: pipeline_table
+    access: {reader: roles/bigquery.dataViewer}

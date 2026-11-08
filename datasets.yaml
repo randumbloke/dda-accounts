@@ -1,0 +1,19 @@
+# Domain datasets (design §3.3). Schema: schemas/datasets.schema.json.
+# {env} is replaced by the environment before use (§3.1).
+datasets:
+  accounts_staging:
+    stage: staging
+    sensitivity: non-sensitive
+    description: Account and transaction files loaded as landed (P6-39).
+  accounts_curated:
+    stage: curated
+    sensitivity: non-sensitive
+    description: Cleaned accounts and transactions; accounts joined to Customer Profile (AT-23).
+  accounts_analytics:
+    stage: analytics
+    sensitivity: non-sensitive
+    description: Accounts data product tables (Account Summary).
+table_contacts:
+  accounts_curated.accounts:
+    owner: dda-accounts-{env}-owners@mikegyoung.joonix.net
+    steward: dda-accounts-{env}-stewards@mikegyoung.joonix.net

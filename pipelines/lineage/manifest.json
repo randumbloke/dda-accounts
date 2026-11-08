@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "domain": "accounts-dev",
+  "generated_by": "hand (P6-39)",
+  "targets": {
+    "kcdda-core-dwh-dev.accounts_staging.accounts": {
+      "sources": [],
+      "landing_paths": ["gs://kcdda-core-dwh-dev-accounts-landing/accounts/"]
+    },
+    "kcdda-core-dwh-dev.accounts_staging.transactions": {
+      "sources": [],
+      "landing_paths": ["gs://kcdda-core-dwh-dev-accounts-landing/transactions/"]
+    },
+    "kcdda-core-dwh-dev.accounts_curated.accounts": {
+      "sources": ["kcdda-core-dwh-dev.accounts_staging.accounts"]
+    },
+    "kcdda-core-dwh-dev.accounts_curated.transactions": {
+      "sources": ["kcdda-core-dwh-dev.accounts_staging.transactions"]
+    },
+    "kcdda-core-dwh-dev.accounts_curated.customer_accounts": {
+      "sources": [
+        "kcdda-core-dwh-dev.accounts_curated.accounts",
+        "kcdda-customer-analytics-dev.customer_analytics.customer_profile"
+      ]
+    },
+    "kcdda-accounts-analytics-dev.accounts_analytics.account_summary": {
+      "sources": [
+        "kcdda-core-dwh-dev.accounts_curated.accounts",
+        "kcdda-core-dwh-dev.accounts_curated.transactions"
+      ]
+    }
+  }
+}
