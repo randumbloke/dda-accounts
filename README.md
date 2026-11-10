@@ -8,7 +8,7 @@ pipeline (design §3, §6.1; change `mvp-phase-1-build`, phase 1). Applied by `t
 
 The `.tf` files, the pipeline code, tests, Dockerfile and CI are identical to `dda-customer`.
 What differs: `datasets.yaml`, `products/`, `dq/`, `envs/*/*/<env>.tfvars`, `state.config`,
-`pipelines/{config.yaml,steps.yaml,sql/,lineage/manifest.json}` and `cloudbuild.yaml`'s `_BUSINESS`.
+`pipelines/{config.yaml,steps.yaml,sql/,lineage/manifest.json}`.
 
 ## Layout
 
