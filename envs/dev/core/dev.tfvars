@@ -1,11 +1,12 @@
 # Values for the accounts domain, dev environment. The .tf files are identical across domain
 # repositories and environments; only this file and state.config differ (design §6.1).
-business        = "accounts"
-env             = "dev"
-tier            = "nonprod"
-region          = "australia-southeast1"
-tf_state_bucket = "tfstate-pltfrm-ngnrng"
-billing_project = "pltfrm-ngnrng"
+business             = "accounts"
+env                  = "dev"
+tier                 = "nonprod"
+region               = "australia-southeast1"
+tf_state_bucket      = "tfstate-pltfrm-ngnrng"
+billing_project      = ""
+manage_access_groups = false
 
 components = {
   classifier          = false
